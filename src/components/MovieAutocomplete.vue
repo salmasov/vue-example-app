@@ -15,7 +15,7 @@ export default Vue.extend({
   },
   methods: {
     onSelectedItemChange(value: number) {
-      this.$router.push(`/${value}`)
+      this.$router.push({ name: 'MovieDetailed', params: { id: String(value) } })
     },
     async searchMovie(value: string) {
       if (!value || value.length < 3) return

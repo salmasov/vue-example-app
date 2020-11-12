@@ -44,6 +44,25 @@ export default Vue.extend({
     isLoading: true,
     movie: null as MovieDetailed | null,
   }),
+  beforeRouteUpdate(to, from, next) {
+    const id = to.params.id
+    this.fetchMovieDetailed(id)
+    next()
+  },
+  methods: {
+    async fetchMovieDetailed(id: string) {
+      this.isLoading = true
+      try {
+        const res = await apiService.get(`/movie/${id}`)
+        this.movie = res.data
+      } catch (error) {
+        throw new Error(error)
+      } finally {
+        this.isLoading = false
+      }
+    },
+  },
+
   computed: {
     entries(): any[] | null {
       if (!this.movie) return null
@@ -52,15 +71,9 @@ export default Vue.extend({
   },
 
   async mounted() {
+    console.log('mounted movie detailed page')
     const id = this.$route.params.id
-    try {
-      const res = await apiService.get(`/movie/${id}`)
-      this.movie = res.data
-    } catch (error) {
-      throw new Error(error)
-    } finally {
-      this.isLoading = false
-    }
+    this.fetchMovieDetailed(id)
   },
 })
 </script>
