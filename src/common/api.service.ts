@@ -1,20 +1,23 @@
-import Vue from 'vue'
-import axios from 'axios'
-import VueAxios from 'vue-axios'
+import axios, { AxiosInstance } from 'axios'
 
 const API_KEY = process.env.VUE_APP_API_KEY
 const BASE_URL = `https://api.themoviedb.org/3/`
 
-const ApiService = {
-  init() {
-    Vue.use(VueAxios, axios)
-    Vue.axios.defaults.baseURL = BASE_URL
-    Vue.axios.interceptors.request.use((config) => {
-      config.params = config.params || {}
-      config.params['api_key'] = API_KEY
-      return config
-    })
-  },
+let singletonInstance = null as AxiosInstance | null
+const getApiService = () => {
+  if (singletonInstance) return singletonInstance
+  singletonInstance = axios.create({
+    baseURL: BASE_URL,
+  })
+
+  singletonInstance.interceptors.request.use((config) => {
+    config.params = config.params || {}
+    config.params['api_key'] = API_KEY
+    config.params['language'] = 'ru-RU'
+    return config
+  })
+
+  return singletonInstance
 }
 
-export default ApiService
+export default getApiService

@@ -1,22 +1,7 @@
 <script lang="ts">
 import Vue from 'vue'
-import HelloWorld from './components/HelloWorld.vue'
 
-export default Vue.extend({
-  name: 'App',
-
-  components: {
-    HelloWorld,
-  },
-
-  async mounted() {
-    const res = await this.$http.get('/movie/popular')
-    console.log('res', res)
-  },
-  data: () => ({
-    //
-  }),
-})
+export default Vue.extend({})
 </script>
 <template>
   <v-app>
@@ -50,7 +35,7 @@ export default Vue.extend({
     </v-app-bar>
 
     <v-main>
-      <HelloWorld />
+      <router-view />
     </v-main>
   </v-app>
 </template>
