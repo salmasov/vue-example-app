@@ -1,12 +1,22 @@
 <script lang="ts">
 import Vue from 'vue'
 
-export default Vue.extend({})
+import MovieAutocomplete from '@/components/MovieAutocomplete.vue'
+
+export default Vue.extend({
+  components: {
+    MovieAutocomplete,
+  },
+})
 </script>
 <template>
   <v-app>
     <v-app-bar app color="primary" dark>
-      <div class="d-flex align-center">
+      <div class="content">
+        <h1>Movie Searcher</h1>
+        <movie-autocomplete class="autocomplete-offset" />
+      </div>
+      <!-- <div class="d-flex align-center">
         <v-img
           alt="Vuetify Logo"
           class="shrink mr-2"
@@ -31,7 +41,7 @@ export default Vue.extend({})
       <v-btn href="https://github.com/vuetifyjs/vuetify/releases/latest" target="_blank" text>
         <span class="mr-2">Latest Release</span>
         <v-icon>mdi-open-in-new</v-icon>
-      </v-btn>
+      </v-btn> -->
     </v-app-bar>
 
     <v-main>
@@ -39,3 +49,17 @@ export default Vue.extend({})
     </v-main>
   </v-app>
 </template>
+
+<style lang="scss" scoped>
+.content {
+  width: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+}
+.autocomplete-offset {
+  flex-grow: 5;
+}
+// .content {
+//   width: 100%;
+// }
+</style>

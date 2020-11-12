@@ -14,6 +14,9 @@ export default Vue.extend({
     }),
   },
   methods: {
+    onSelectedItemChange(value: number) {
+      this.$router.push(`/${value}`)
+    },
     async searchMovie(value: string) {
       if (!value || value.length < 3) return
       const res = await apiService.get('/search/movie', { params: { query: value } })
@@ -31,21 +34,27 @@ export default Vue.extend({
 <template>
   <div class="movie-autocomplete">
     <v-autocomplete
+      @change="onSelectedItemChange"
       v-model="select"
       :loading="loading"
       :items="items"
       :search-input.sync="search"
       class="mx-4"
       flat
-      hide-no-data
       hide-details
+      item-text="title"
+      item-value="id"
       label="Найти фильм"
       solo-inverted
     >
       <template v-slot:item="{ item }">
         <v-list-item-content>
           <v-list-item-title v-text="item.title"></v-list-item-title>
+          <!-- <v-list-item-subtitle v-text="item.symbol"></v-list-item-subtitle> -->
         </v-list-item-content>
+        <!-- <v-list-item-action>
+          <v-icon>mdi-bitcoin</v-icon>
+        </v-list-item-action> -->
       </template>
     </v-autocomplete>
   </div>

@@ -5,7 +5,7 @@ import getApiService from '@/common/api.service'
 import { MovieListResult, PopularMovieResult } from '@/models/MovieListResult'
 
 import MovieCard from '@/components/MovieCard.vue'
-import MovieAutocomplete from '@/components/MovieAutocomplete.vue'
+// import MovieAutocomplete from '@/components/MovieAutocomplete.vue'
 
 const apiService = getApiService()
 
@@ -17,13 +17,13 @@ export default Vue.extend({
 
   components: {
     MovieCard,
-    MovieAutocomplete,
   },
 
   async mounted() {
     try {
       const res = await apiService.get<PopularMovieResult>('/movie/popular')
       this.movies = res.data.results
+      console.log('changed', this.movies)
     } catch (error) {
       throw new Error(error)
     } finally {
@@ -36,9 +36,10 @@ export default Vue.extend({
   <div class="home-page">
     <div class="loading" v-if="isLoading">loading...</div>
     <div class="content" v-else>
-      <div class="search-bar">
+      <!-- <div class="search-bar">
         <movie-autocomplete />
-      </div>
+      </div> -->
+      <h1>Популярные фильмы</h1>
       <div class="movie-list">
         <movie-card v-for="movie in movies" :key="movie.id" :movie="movie" />
       </div>
@@ -53,6 +54,7 @@ export default Vue.extend({
 .movie-list {
   display: grid;
   grid-gap: 16px;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  justify-content: center;
+  grid-template-columns: repeat(auto-fill, 300px);
 }
 </style>

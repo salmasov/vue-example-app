@@ -10,6 +10,13 @@ const routes: Array<RouteConfig> = [
     name: 'Home',
     component: HomePage,
   },
+
+  {
+    path: '/:id',
+    name: 'MovieDetailed',
+    component: () =>
+      import(/* webpackChunkName: "movie-detailed" */ '@/views/MovieDetailedPage.vue'),
+  },
   {
     path: '/about',
     name: 'About',
