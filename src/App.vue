@@ -1,3 +1,23 @@
+<script lang="ts">
+import Vue from 'vue'
+import HelloWorld from './components/HelloWorld.vue'
+
+export default Vue.extend({
+  name: 'App',
+
+  components: {
+    HelloWorld,
+  },
+
+  async mounted() {
+    const res = await this.$http.get('/movie/popular')
+    console.log('res', res)
+  },
+  data: () => ({
+    //
+  }),
+})
+</script>
 <template>
   <v-app>
     <v-app-bar app color="primary" dark>
@@ -34,20 +54,3 @@
     </v-main>
   </v-app>
 </template>
-
-<script lang="ts">
-import Vue from 'vue'
-import HelloWorld from './components/HelloWorld.vue'
-
-export default Vue.extend({
-  name: 'App',
-
-  components: {
-    HelloWorld,
-  },
-
-  data: () => ({
-    //
-  }),
-})
-</script>
