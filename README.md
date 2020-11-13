@@ -1,6 +1,14 @@
 # vue-example-app
 
-## Project setup
+Приложение для поиска фильмов через API https://developers.themoviedb.org/3
+
+Для корректной работы приложения нужен API_KEY
+
+Добавляется он через .env файл в переменную вида VUEAPP_API_KEY=%значение-ключа%
+
+Ключ можно спросить у @salmasov
+
+### Project setup
 
 ```
 npm install
@@ -35,8 +43,6 @@ npm run test:e2e
 ```
 npm run lint
 ```
-
-### TODO
 
 ### Customize configuration
 
