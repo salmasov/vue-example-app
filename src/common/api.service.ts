@@ -4,6 +4,8 @@ const API_KEY = process.env.VUE_APP_API_KEY
 const BASE_URL = `https://api.themoviedb.org/3/`
 
 let singletonInstance = null as AxiosInstance | null
+// не захотел инжектить axios в инстанс Vue
+// реализовал логику работы как синглтон, достаточно вызвать в файле getApiService()
 const getApiService = () => {
   if (singletonInstance) return singletonInstance
   singletonInstance = axios.create({

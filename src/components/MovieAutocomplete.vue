@@ -4,9 +4,11 @@ import getApiService from '@/common/api.service'
 import { debounce } from 'throttle-debounce'
 const apiService = getApiService()
 
+// поисковая строка c автокомплитом
 export default Vue.extend({
   watch: {
-    search: debounce(500, function(
+    // есть debounce на ввод, чтобы не ддосить апишку запросами
+    search: debounce(300, function(
       this: { searchMovie: (value: string | null) => void },
       value: string | null,
     ) {
@@ -14,12 +16,14 @@ export default Vue.extend({
     }),
   },
   methods: {
+    // изменяем роут на /:id при найденном фильме
     onSelectedItemChange(value: number) {
       this.$router.push({ name: 'MovieDetailed', params: { id: String(value) } })
     },
     async searchMovie(value: string) {
       if (!value || value.length < 3) return
       const res = await apiService.get('/search/movie', { params: { query: value } })
+      // TODO: не хватает errorHandlinga
       this.items = res.data.results
     },
   },
@@ -41,6 +45,7 @@ export default Vue.extend({
       :search-input.sync="search"
       class="mx-4"
       flat
+      hide-no-data
       hide-details
       item-text="title"
       item-value="id"
@@ -50,11 +55,7 @@ export default Vue.extend({
       <template v-slot:item="{ item }">
         <v-list-item-content>
           <v-list-item-title v-text="item.title"></v-list-item-title>
-          <!-- <v-list-item-subtitle v-text="item.symbol"></v-list-item-subtitle> -->
         </v-list-item-content>
-        <!-- <v-list-item-action>
-          <v-icon>mdi-bitcoin</v-icon>
-        </v-list-item-action> -->
       </template>
     </v-autocomplete>
   </div>

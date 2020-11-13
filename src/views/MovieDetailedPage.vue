@@ -1,13 +1,10 @@
 <script lang="ts">
 import Vue from 'vue'
 import getApiService from '@/common/api.service'
+import { Genre } from '@/models/Genre.ts'
 
 const apiService = getApiService()
 
-interface GenreSlug {
-  id: number
-  name: string
-}
 enum Statuses {
   RUMORED = 'Rumored',
   PLANNED = 'Planned',
@@ -20,7 +17,7 @@ interface MovieDetailed {
   adult: boolean
   backdrop_path: string | null
   budget: boolean
-  genres: GenreSlug[]
+  genre: Genre[]
   homepage: string | null
   id: number
   imdb_id: string | null
@@ -56,6 +53,7 @@ export default Vue.extend({
         const res = await apiService.get(`/movie/${id}`)
         this.movie = res.data
       } catch (error) {
+        // TODO: не хватает корректного errorHandling'a для отображения
         throw new Error(error)
       } finally {
         this.isLoading = false
@@ -71,7 +69,6 @@ export default Vue.extend({
   },
 
   async mounted() {
-    console.log('mounted movie detailed page')
     const id = this.$route.params.id
     this.fetchMovieDetailed(id)
   },
@@ -79,7 +76,9 @@ export default Vue.extend({
 </script>
 <template>
   <div class="home-page">
-    <div class="loading" v-if="isLoading">loading...</div>
+    <div class="loading" v-if="isLoading">
+      <v-progress-circular :size="100" color="primary" indeterminate />
+    </div>
     <div class="content" v-else>
       <h1>{{ movie.title }}</h1>
 
@@ -110,6 +109,13 @@ export default Vue.extend({
 </template>
 
 <style lang="scss" scoped>
+.loading {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
 pre {
   font-size: 12px;
 }
